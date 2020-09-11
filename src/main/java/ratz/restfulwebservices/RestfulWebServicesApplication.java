@@ -1,4 +1,4 @@
-package ratz.restful.webservices.restfulwebservices;
+package ratz.restfulwebservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
