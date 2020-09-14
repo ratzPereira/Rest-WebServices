@@ -8,6 +8,7 @@ import ratz.restfulwebservices.daoservice.UserDaoService;
 import ratz.restfulwebservices.domain.User;
 import ratz.restfulwebservices.exception.UserNotFoundException;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public void createUser(@RequestBody User user) {
+    public void createUser(@Valid @RequestBody User user) {
 
         User savedUser = userDaoService.save(user);
 

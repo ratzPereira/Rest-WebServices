@@ -1,6 +1,8 @@
 package ratz.restfulwebservices.domain;
 
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 
@@ -8,7 +10,11 @@ import java.util.Date;
 public class User {
 
     private Integer id;
+
+    @Size(min = 2, max = 20, message = "Name should have at least 2 characters, and 20 characters max")
     private String name;
+
+    @Past
     private Date birthDate;
 
 
