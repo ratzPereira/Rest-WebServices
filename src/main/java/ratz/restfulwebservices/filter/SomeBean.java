@@ -1,16 +1,16 @@
 package ratz.restfulwebservices.filter;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 
-//we can use as well @JsonIgnoreProperties(value={"value1", "value2"})
+//we can use as well @JsonIgnoreProperties(value={"value1", "value2"})   FOR STATIC
+
+@JsonFilter("SomeBeanFilter") //for dynamic filtering <- see filteringcontroller class
 public class SomeBean {
 
     private String value1;
     private String value2;
-
-    @JsonIgnore
     private String value3;
 
 
