@@ -6,7 +6,6 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ratz.restfulwebservices.daoservice.UserDaoService;
 import ratz.restfulwebservices.domain.User;
 import ratz.restfulwebservices.exception.UserNotFoundException;
 import ratz.restfulwebservices.repository.UserRepository;
@@ -21,12 +20,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 public class UserJPAController {
 
-    private UserDaoService userDaoService;
+
     private UserRepository userRepository;
 
 
-    public UserJPAController(UserDaoService userDaoService, UserRepository userRepository) {
-        this.userDaoService = userDaoService;
+    public UserJPAController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -55,7 +53,7 @@ public class UserJPAController {
     @PostMapping("/jpa/users")
     public void createUser(@Valid @RequestBody User user) {
 
-        User savedUser = userDaoService.save(user);
+        User savedUser = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedUser.getId()).toUri();
@@ -67,9 +65,6 @@ public class UserJPAController {
 
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        User user = userDaoService.deleteById(id);
-        if (user == null) {
-            throw new UserNotFoundException("id- " + id);
-        }
+        userRepository.deleteById(id);
     }
 }
