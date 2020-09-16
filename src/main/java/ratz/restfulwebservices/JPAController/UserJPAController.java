@@ -6,6 +6,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ratz.restfulwebservices.domain.Post;
 import ratz.restfulwebservices.domain.User;
 import ratz.restfulwebservices.exception.UserNotFoundException;
 import ratz.restfulwebservices.repository.UserRepository;
@@ -66,5 +67,16 @@ public class UserJPAController {
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id) {
         userRepository.deleteById(id);
+    }
+
+    @GetMapping("/jpa/users/{id}/posts")
+    public List<Post> retrieveAllPost(@PathVariable int id) {
+
+        Optional<User> userbyId = userRepository.findById(id);
+        if(!userbyId.isPresent()){
+            throw new UserNotFoundException("id- " + id);
+        }
+
+        return userbyId.get().getPosts();
     }
 }
