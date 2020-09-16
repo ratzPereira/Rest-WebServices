@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonVersionController {
 
 
+    //examples of versioning with URI's
     @GetMapping("v1/person")
     public PersonV1 personV1() {
 
@@ -20,4 +21,46 @@ public class PersonVersionController {
         return new PersonV2(new Name("Bob", "Marley"));
     }
 
+
+    //example of versioning using params
+    @GetMapping(value = "/person/param", params = "version=1")
+    public PersonV1 paramV1() {
+
+        return new PersonV1("Bob Marley");
+    }
+
+    @GetMapping(value =  "/person/param" , params = "version=2")
+    public PersonV2 paramV2() {
+
+        return new PersonV2(new Name("Bob", "Marley"));
+    }
+
+
+    //example of versioning using header versioning
+    @GetMapping(value = "/person/header", headers = "X-API_VERSION=1")
+    public PersonV1 headerV1() {
+
+        return new PersonV1("Bob Marley");
+    }
+
+    @GetMapping(value =  "/person/header" , headers = "X-API_VERSION=2")
+    public PersonV2 headerV2() {
+
+        return new PersonV2(new Name("Bob", "Marley"));
+    }
+
+
+
+    //example of versioning using produces also called MIME TYPE
+    @GetMapping(value = "/person/produces", produces = "application/vnd.company.app-v1+json")
+    public PersonV1 producesV1() {
+
+        return new PersonV1("Bob Marley");
+    }
+
+    @GetMapping(value =  "/person/produces" , produces = "application/vnd.company.app-v2+json")
+    public PersonV2 producesV2() {
+
+        return new PersonV2(new Name("Bob", "Marley"));
+    }
 }
